@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Model responsible for customer billet payments infos
 class BilletPayment < ApplicationRecord
   before_validation :set_expires_at
 

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Model responsible for customer address data
 class Address < ApplicationRecord
   validates :address, presence: true
   validates :city, presence: true
