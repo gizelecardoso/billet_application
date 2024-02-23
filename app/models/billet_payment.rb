@@ -4,6 +4,8 @@
 class BilletPayment < ApplicationRecord
   before_validation :set_expires_at
 
+  belongs_to :customer
+
   enum status: { opened: 0, overdue: 1, canceled: 2 }
 
   validates :amount, presence: true

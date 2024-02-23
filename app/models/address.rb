@@ -2,6 +2,8 @@
 
 # Model responsible for customer address data
 class Address < ApplicationRecord
+  belongs_to :customer
+
   validates :address, presence: true
   validates :city, presence: true
   validates :state, presence: true
