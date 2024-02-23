@@ -1,0 +1,7 @@
+<%= form_with url: billet_payment_path, method: :patch do |form| %>
+
+  <%= form.label :amount, "Valor:" %>
+  <%= form.number_field :amount %>
+
+  <%= form.submit "Pesquisar" %>
+<% end %>

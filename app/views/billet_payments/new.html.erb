@@ -1,0 +1,27 @@
+<%= form_with url: billet_payments_path, method: :post do |form| %>
+  <%= form.label :name, "Nome do consumidor:" %>
+  <%= form.text_field :name %>
+
+  <%= form.label :document, "Número do documento:" %>
+  <%= form.text_field :document %>
+
+  <%= form.label :amount, "Valor:" %>
+  <%= form.number_field :amount %>
+
+  <%= form.label :address, "Endereço:" %>
+  <%= form.text_field :address %>
+
+  <%= form.label :city, "Cidade:" %>
+  <%= form.text_field :city %>
+
+  <%= form.label :state, "Estado:" %>
+  <%= form.text_field :state %>
+
+  <%= form.label :zipcode, "Cep:" %>
+  <%= form.text_field :zipcode %>
+
+  <%= form.label :neighborhood, "Bairro:" %>
+  <%= form.text_field :neighborhood %>
+
+  <%= form.submit "Pesquisar" %>
+<% end %>

@@ -2,7 +2,7 @@
 
 # Model responsible for customer billet payments infos
 class BilletPayment < ApplicationRecord
-  before_validation :set_expires_at
+  before_validation :set_default_values
 
   belongs_to :customer
 
@@ -12,7 +12,8 @@ class BilletPayment < ApplicationRecord
   validates :status, presence: true
   validates :expires_at, presence: true
 
-  def set_expires_at
+  def set_default_values
     self.expires_at = Date.today + 7
+    self.status = 0
   end
 end

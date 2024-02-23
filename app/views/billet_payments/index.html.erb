@@ -1,0 +1,8 @@
+<% @billets.each do |billet| %>
+  <tr>
+    <td><%= billet.amount %></td>
+    <td><%= billet.expires_at %></td>
+    <td><%= billet.status %></td>
+    <td><%= billet.customer.name %></td>
+  </tr>
+<% end %>
