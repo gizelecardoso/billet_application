@@ -1,0 +1,9 @@
+<%= form_with url: customers_path, method: :post do |form| %>
+  <%= form.label :name, "Nome do consumidor:" %>
+  <%= form.text_field :name %>
+
+  <%= form.label :document, "Número do documento:" %>
+  <%= form.text_field :document %>
+
+  <%= form.submit "Criar Consumidor" %>
+<% end %>

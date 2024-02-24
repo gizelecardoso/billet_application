@@ -1,36 +1,32 @@
 # frozen_string_literal: true
 
-# Controller responsible for received some requests of the system
+# Controller responsible for received the main requests for billet_payment
 class BilletPaymentsController < ApplicationController
-  before_action :prepare_params
+  before_action :prepare_customer, only: [:new]
 
   def index
-    @billets = BilletPayment.all
+    @billet_payments = BilletPayment.all
 
     respond_to do |format|
       format.html
-      format.json { render json: @billets }
+      format.json { render json: @billet_payments }
     end
   end
 
   def show
-    @billet = BilletPayment.find(params[:id])
-    @customer = @billet.customer
+    @billet_payment = BilletPayment.find(params[:id])
+    @customer = @billet_payment.customer
     @address = @customer.addresses.first
   end
 
   def new
-    @customer = Customer.new
-    @address = Address.new
-    @billet = BilletPayment.new
+    @billet_payment = BilletPayment.new
   end
 
   def create
-    @customer = Customer.new(@customer_params)
-    @address = Address.new(@address_params.merge(customer: @customer))
-    @billet_payment = BilletPayment.new(@billet_params.merge(customer: @customer))
+    @billet_payment = BilletPayment.new(billet_payments_params.merge(customer_id: params[:customer_id]))
 
-    if @billet_payment.save! and @customer.save! and @address.save!
+    if @billet_payment.save!
       redirect_to @billet_payment
     else
       render :new, status: :unprocessable_entity
@@ -44,7 +40,7 @@ class BilletPaymentsController < ApplicationController
   def update
     @billet_payment = BilletPayment.find(params[:id])
 
-    if @billet_payment.update(@billet_params)
+    if @billet_payment.update(billet_payments_params)
       redirect_to @billet_payment
     else
       render :edit, status: :unprocessable_entity
@@ -53,9 +49,11 @@ class BilletPaymentsController < ApplicationController
 
   private
 
-  def prepare_params
-    @customer_params = { name: params[:name], document: params[:document] }
-    @address_params = { address: params[:address], city: params[:city], state: params[:state], zipcode: params[:zipcode], neighborhood: params[:neighborhood] }
-    @billet_params = { amount: params[:amount], status: params[:status] }
+  def billet_payments_params
+    params.permit(:amount, :status, :address)
+  end
+
+  def prepare_customer
+    @customer_id = Customer.find(params[:customer_id]).id
   end
 end
