@@ -10,10 +10,9 @@ class BilletPayment < ApplicationRecord
 
   validates :amount, presence: true
   validates :status, presence: true
-  validates :expires_at, presence: true
+  validates :expire_at, presence: true
 
   def set_default_values
-    self.expires_at = Date.today + 7
     self.status = 0
   end
 end

@@ -8,7 +8,7 @@ class BilletPaymentsController < ApplicationController
   def index
     result = BilletPayments::List.call
 
-    @billet_payments = result.billet_payments
+    @billet_payments = result.billet_payments.present? ? result.billet_payments : []
     respond_to do |format|
       format.html
       format.json { render json: @billet_payments }
@@ -16,8 +16,6 @@ class BilletPaymentsController < ApplicationController
   end
 
   def show
-    @customer = @billet_payment.customer
-    @address = @customer.addresses.first
   end
 
   def new
@@ -31,7 +29,7 @@ class BilletPaymentsController < ApplicationController
     result = BilletPayments::CreateOrganizer.call(billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id]))
 
     if result.success?
-      redirect_to result.billet_payment
+      redirect_to billet_payment_path(result.bank_billet)
     else
       render :new, status: :unprocessable_entity
     end
@@ -42,8 +40,11 @@ class BilletPaymentsController < ApplicationController
   end
 
   def update
-    if @billet_payment.update(billet_payments_params)
-      redirect_to @billet_payment
+    debugger
+    result = BilletPayments::EditOrganizer.call(billet_payment: @billet_payment, billet_payments_params: billet_payments_params)
+
+    if result.success?
+      redirect_to billet_payment_path(result.bank_billet, id: billet_payments_params[:id])
     else
       render :edit, status: :unprocessable_entity
     end
@@ -52,7 +53,7 @@ class BilletPaymentsController < ApplicationController
   private
 
   def billet_payments_params
-    params.permit(:amount, :status)
+    params.permit(:amount, :status, :id)
   end
 
   def prepare_customer
@@ -60,6 +61,6 @@ class BilletPaymentsController < ApplicationController
   end
 
   def find_billet
-    @billet_payment = BilletPayments::Find.call(billet_payment_id: params[:id]).billet_payments
+    @billet_payment = BilletPayments::Find.call(billet_payment_id: params[:id]).billet_payment
   end
 end

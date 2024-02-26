@@ -1,8 +1,8 @@
 <% @billet_payments.each do |billet| %>
   <tr>
-    <td><%= billet.amount %></td>
-    <td><%= billet.expires_at %></td>
-    <td><%= billet.status %></td>
-    <td><%= billet.customer.name %></td>
+    <td><%= billet["amount"] %></td>
+    <td><%= billet["expire_at"] %></td>
+    <td><%= billet["status"] %></td>
+    <td><%= billet["customer_person_name"] %></td>
   </tr>
 <% end %>

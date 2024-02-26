@@ -2,8 +2,9 @@ module BilletPayments
   class CreateOrganizer
     include Interactor::Organizer
 
-    organize Create,
+    organize Customers::Find,
       GenerateBilletPaymentJson,
-      CreateApi
+      CreateApi,
+      Create
   end
 end

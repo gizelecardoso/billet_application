@@ -1,9 +1,13 @@
+require_relative '../configure_api'
+
 module BilletPayments
   class List
     include Interactor
 
     def call
-      context.billet_payments = BilletPayment.all.in_order_of(:status, %w(opened overdue canceled))
+      billet_payments_api = BoletoSimples::BankBillet.all
+
+      context.billet_payments = billet_payments_api.map(&:attributes)
     end
   end
 end
