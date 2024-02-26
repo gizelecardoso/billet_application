@@ -9,10 +9,10 @@ class AddressesController < ApplicationController
   end
 
   def create
-    @address = Address.new(address_params.merge(customer_id: params[:customer_id]))
+    result = Addresses::Create.call(address_params: address_params.merge(customer_id: params[:customer_id]))
 
-    if @address.save!
-      redirect_to new_billet_payment_path(customer_id: @address.customer.id)
+    if result.success?
+      redirect_to new_billet_payment_path(customer_id: result.address.customer.id)
     else
       render :new, status: :unprocessable_entity
     end

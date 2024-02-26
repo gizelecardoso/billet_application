@@ -48,6 +48,10 @@ gem 'bootsnap', require: false
 
 gem 'rubocop', require: false
 
+gem 'boletosimples'
+gem 'dotenv-rails', '~> 3.0', '>= 3.0.2'
+gem 'interactor', '~> 3.1', '>= 3.1.2'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]

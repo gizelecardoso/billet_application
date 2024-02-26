@@ -3,10 +3,12 @@
 # Controller responsible for received the main requests for billet_payment
 class BilletPaymentsController < ApplicationController
   before_action :prepare_customer, only: [:new]
+  before_action :find_billet, only: [:show, :edit, :update]
 
   def index
-    @billet_payments = BilletPayment.all
+    result = BilletPayments::List.call
 
+    @billet_payments = result.billet_payments
     respond_to do |format|
       format.html
       format.json { render json: @billet_payments }
@@ -14,7 +16,6 @@ class BilletPaymentsController < ApplicationController
   end
 
   def show
-    @billet_payment = BilletPayment.find(params[:id])
     @customer = @billet_payment.customer
     @address = @customer.addresses.first
   end
@@ -24,22 +25,23 @@ class BilletPaymentsController < ApplicationController
   end
 
   def create
-    @billet_payment = BilletPayment.new(billet_payments_params.merge(customer_id: params[:customer_id]))
+    # result_account = CreateAccount.call
 
-    if @billet_payment.save!
-      redirect_to @billet_payment
+    # if result_account.success?
+    result = BilletPayments::CreateOrganizer.call(billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id]))
+
+    if result.success?
+      redirect_to result.billet_payment
     else
       render :new, status: :unprocessable_entity
     end
+    # end
   end
 
   def edit
-    @billet = BilletPayment.find(params[:id])
   end
 
   def update
-    @billet_payment = BilletPayment.find(params[:id])
-
     if @billet_payment.update(billet_payments_params)
       redirect_to @billet_payment
     else
@@ -50,10 +52,14 @@ class BilletPaymentsController < ApplicationController
   private
 
   def billet_payments_params
-    params.permit(:amount, :status, :address)
+    params.permit(:amount, :status)
   end
 
   def prepare_customer
     @customer_id = Customer.find(params[:customer_id]).id
+  end
+
+  def find_billet
+    @billet_payment = BilletPayments::Find.call(billet_payment_id: params[:id]).billet_payments
   end
 end

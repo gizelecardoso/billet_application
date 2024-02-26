@@ -7,10 +7,10 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.new(customer_params)
+    result = Customers::Create.call(customers_params: customer_params)
 
-    if @customer.save!
-      redirect_to new_address_path(customer_id: Customer.last.id)
+    if result.success?
+      redirect_to new_address_path(customer_id: result.customer.id)
     else
       render :new, status: :unprocessable_entity
     end
