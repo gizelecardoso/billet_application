@@ -11,6 +11,7 @@ module BilletPayments
 
     def call
       bank_billet = BoletoSimples::BankBillet.create(context.billet_payment_json)
+      context.billet_payment_id = bank_billet['id']
 
       error = bank_billet.response_errors
 
