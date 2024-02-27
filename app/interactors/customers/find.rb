@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Customers
+  # Class responsible for FIND an customer by API
   class Find
     include Interactor
 

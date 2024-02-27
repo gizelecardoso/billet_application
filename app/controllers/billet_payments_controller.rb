@@ -3,7 +3,7 @@
 # Controller responsible for received the main requests for billet_payment
 class BilletPaymentsController < ApplicationController
   before_action :prepare_customer, only: [:new]
-  before_action :find_billet, only: [:show, :edit, :update]
+  before_action :find_billet, only: %i[show edit update]
 
   def index
     result = BilletPayments::List.call
@@ -15,36 +15,34 @@ class BilletPaymentsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @billet_payment = BilletPayment.new
   end
 
   def create
-    # result_account = CreateAccount.call
-
-    # if result_account.success?
-    result = BilletPayments::CreateOrganizer.call(billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id]))
+    result = BilletPayments::CreateOrganizer.call(
+      billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id])
+    )
 
     if result.success?
-      redirect_to billet_payment_path(result.bank_billet)
+      redirect_to billet_payment_path(result.billet_payment)
     else
       render :new, status: :unprocessable_entity
     end
-    # end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
-    debugger
-    result = BilletPayments::EditOrganizer.call(billet_payment: @billet_payment, billet_payments_params: billet_payments_params)
+    result = BilletPayments::EditOrganizer.call(
+      billet_payment: @billet_payment,
+      billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id])
+    )
 
     if result.success?
-      redirect_to billet_payment_path(result.bank_billet, id: billet_payments_params[:id])
+      redirect_to billet_payment_path(result.billet_payment, id: result.billet_payment['id'])
     else
       render :edit, status: :unprocessable_entity
     end

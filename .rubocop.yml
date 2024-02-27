@@ -2,7 +2,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'bin/**'
-
+    - 'app/interactors/create_account.rb'
 
 # Customize rules
 Metrics/CyclomaticComplexity:

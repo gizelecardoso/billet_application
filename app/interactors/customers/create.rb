@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Customers
+  # Class responsible for CREATE a customer into the database
   class Create
     include Interactor
 
