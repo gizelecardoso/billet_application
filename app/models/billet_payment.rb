@@ -9,7 +9,6 @@ class BilletPayment < ApplicationRecord
   enum status: { opened: 0, overdue: 1, canceled: 2, paid: 3 }
 
   validates :amount, presence: true
-  validates :status, presence: true
   validates :expire_at, presence: true
 
   def set_default_values
