@@ -48,6 +48,18 @@ class BilletPaymentsController < ApplicationController
     end
   end
 
+  def cancel
+    result = BilletPayments::CancelOrganizer.call(
+      billet_payment_id: billet_payments_params[:id]
+    )
+
+    if result.success?
+      redirect_to billet_payment_path(result.billet_payment, id: result.billet_payment['id'])
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def billet_payments_params

@@ -6,7 +6,7 @@ class BilletPayment < ApplicationRecord
 
   belongs_to :customer
 
-  enum status: { opened: 0, overdue: 1, canceled: 2 }
+  enum status: { opened: 0, overdue: 1, canceled: 2, paid: 3 }
 
   validates :amount, presence: true
   validates :status, presence: true

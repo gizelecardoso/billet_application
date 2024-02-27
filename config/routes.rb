@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  patch '/billet_payments/:id/cancel', to: 'billet_payments#cancel'
+  put '/billet_payments/:id/cancel', to: 'billet_payments#cancel'
 
   resources :customers, only: %i[new create]
 
