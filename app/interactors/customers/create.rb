@@ -6,7 +6,9 @@ module Customers
     include Interactor
 
     def call
-      context.customer = Customer.create!(context.customers_params)
+      context.customer = Customer.new(context.customers_params)
+
+      context.fail!(error: :invalid_record) unless context.customer.save
     end
   end
 end

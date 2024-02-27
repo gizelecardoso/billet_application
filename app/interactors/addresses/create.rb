@@ -6,7 +6,9 @@ module Addresses
     include Interactor
 
     def call
-      context.address = Address.create!(context.address_params)
+      context.address = Address.new(context.address_params)
+
+      context.fail!(error: :invalid_record) unless context.address.save
     end
   end
 end
