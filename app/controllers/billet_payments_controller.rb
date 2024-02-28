@@ -54,9 +54,10 @@ class BilletPaymentsController < ApplicationController
     )
 
     if result.success?
-      redirect_to billet_payment_path(result.billet_payment, id: result.billet_payment['id'])
+      redirect_to billet_payment_path(result.billet_payment)
     else
-      render :edit, status: :unprocessable_entity
+      find_billet
+      render :show, status: :unprocessable_entity
     end
   end
 

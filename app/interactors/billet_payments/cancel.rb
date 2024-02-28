@@ -8,7 +8,7 @@ module BilletPayments
     def call
       context.find_payment = BilletPayment.find_by(api_id: context.billet_payment_id)
 
-      context.find_payment.update!(status: 'canceled')
+      context.fail!(error: :invalid_record) unless context.find_payment&.update!(status: 'canceled')
     end
   end
 end
