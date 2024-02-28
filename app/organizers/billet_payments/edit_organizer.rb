@@ -7,7 +7,7 @@ module BilletPayments
 
     organize GenerateJsonToApi,
              EditApi,
-             Find,
+             FindApi,
              GenerateData,
              Edit
   end

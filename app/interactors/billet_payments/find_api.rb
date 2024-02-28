@@ -4,7 +4,7 @@ require_relative '../configure_api'
 
 module BilletPayments
   # Class responsible for FIND an billet_payment by API
-  class Find
+  class FindApi
     include Interactor
 
     def call

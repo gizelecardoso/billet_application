@@ -8,7 +8,7 @@ module BilletPayments
     organize Customers::Find,
              GenerateJsonToApi,
              CreateApi,
-             Find,
+             FindApi,
              GenerateData,
              Create
   end

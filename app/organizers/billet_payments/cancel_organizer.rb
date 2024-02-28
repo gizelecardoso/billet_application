@@ -6,7 +6,7 @@ module BilletPayments
     include Interactor::Organizer
 
     organize CancelApi,
-             Find,
+             FindApi,
              Cancel
   end
 end

@@ -4,7 +4,7 @@ require_relative '../configure_api'
 
 module BilletPayments
   # Class responsible for LIST all billet_payments by API
-  class List
+  class ListApi
     include Interactor
 
     def call

@@ -6,7 +6,7 @@ class BilletPaymentsController < ApplicationController
   before_action :find_billet, only: %i[show edit update]
 
   def index
-    result = BilletPayments::List.call
+    result = BilletPayments::ListApi.call
 
     @billet_payments = result.billet_payments.present? ? result.billet_payments : []
     respond_to do |format|
@@ -38,11 +38,11 @@ class BilletPaymentsController < ApplicationController
   def update
     result = BilletPayments::EditOrganizer.call(
       billet_payment: @billet_payment,
-      billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id])
+      billet_payments_params:
     )
 
     if result.success?
-      redirect_to billet_payment_path(result.billet_payment, id: result.billet_payment['id'])
+      redirect_to billet_payment_path(result.billet_payment)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -71,6 +71,6 @@ class BilletPaymentsController < ApplicationController
   end
 
   def find_billet
-    @billet_payment = BilletPayments::Find.call(billet_payment_id: params[:id]).billet_payment
+    @billet_payment = BilletPayments::FindApi.call(billet_payment_id: params[:id]).billet_payment
   end
 end
