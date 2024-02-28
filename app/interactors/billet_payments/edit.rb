@@ -6,8 +6,9 @@ module BilletPayments
     include Interactor
 
     def call
-      find_payment = BilletPayment.find_by(api_id: context.billet_payment_id)
-      find_payment.update!(context.billet_payment_data)
+      context.find_payment = BilletPayment.find_by(api_id: context.billet_payment_id)
+
+      context.find_payment.update!(context.billet_payment_data)
     end
   end
 end

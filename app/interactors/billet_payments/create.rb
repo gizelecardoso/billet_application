@@ -6,7 +6,9 @@ module BilletPayments
     include Interactor
 
     def call
-      BilletPayment.create!(context.billet_payment_data)
+      billet_payment = BilletPayment.new(context.billet_payment_data)
+
+      context.fail!(error: :invalid_record) unless billet_payment.save
     end
   end
 end
