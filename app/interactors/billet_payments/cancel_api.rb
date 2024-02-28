@@ -11,12 +11,6 @@ module BilletPayments
 
     def call
       billet_payment = BoletoSimples::BankBillet.cancel(id: context.billet_payment_id)
-
-      error = billet_payment.response_errors
-
-      return unless error.present?
-
-      context.fail!(message: error.first['title']) if error.present?
     end
   end
 end

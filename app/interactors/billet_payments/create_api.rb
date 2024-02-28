@@ -17,7 +17,7 @@ module BilletPayments
 
       return unless error.present?
 
-      context.fail!(message: error.first['title']) if error.present?
+      context.fail!(message: error) if error.present?
     end
   end
 end
