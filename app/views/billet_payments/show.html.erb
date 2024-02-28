@@ -1,25 +1,67 @@
-<h1><%= "Infos" %></h1>
+<div class="flex flex-col">
+  <img src="/img/logo.svg" class="m-10 h-10" alt="Tailwind Play" />
+  <div class="">
+    <div class="mx-auto lg:max-w-5xl md:max-w-2xl sm:max-w-xl">
+      <div class="space-y-6 rounded border-4 border-lime-200 p-10 text-lg text-white">
+        <div>
+          <h2 class="flex justify-center font-bold text-2xl">Dados</h2>
 
-<p><%= "Nome do consumidor:" %></p>
-<p><%= @billet_payment["customer_person_name"] %>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Nome do consumidor: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["customer_person_name"] %></p>
+          </div>
 
-<p><%= "Número do documento:" %></p>
-<p><%= @billet_payment["customer_cnpj_cpf"] %></p>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Número do documento: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["customer_cnpj_cpf"] %></p>
+          </div>
 
-<p><%= "Valor:" %></p>
-<p><%= @billet_payment["amount"] %></p>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Valor: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["amount"] %></p>
+          </div>
 
-<p><%= "Endereço:" %></p>
-<p><%= @billet_payment["customer_address"] %></p>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Endereço: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["customer_address"] %></p>
+          </div>
 
-<p><%= "Cidade:" %></p>
-<p><%= @billet_payment["customer_city_name"] %></p>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Cidade: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["customer_city_name"] %></p>
+          </div>
 
-<p><%= "Estado:" %></p>
-<p><%= @billet_payment["customer_state"] %></p>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Estado: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["customer_state"] %></p>
+          </div>
 
-<p><%= "Cep:" %></p>
-<p><%= @billet_payment["customer_zipcode"] %></p>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Cep: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["customer_zipcode"] %></p>
+          </div>
 
-<p><%= "Bairro:" %></p>
-<p><%= @billet_payment["customer_neighborhood"] %></p>
+          <div class="mb-4 flex space-x-10">
+            <label class="mb-2 block font-bold" for="username"> Bairro: </label>
+            <p class="mb-2 block" for="username"><%= @billet_payment["customer_neighborhood"] %></p>
+          </div>
+        </div>
+        <div class="flex flex-col items-center space-y-10">
+          <div class="flex space-x-4">
+            <%= link_to "Editar", edit_billet_payment_path(@billet_payment), class: "rounded px-4 py-2 font-bold text-white hover:text-lime-200 hover:underline hover:underline-offset-2 focus:outline-none" %>
+
+            <%= form_with url: "/billet_payments/#{@billet_payment.id}/cancel", method: :put, id: "billet_payment_update_form" do |form| %>
+              <%= form.submit "Cancelar", class: "rounded px-4 py-2 font-bold text-white hover:text-lime-200 hover:underline hover:underline-offset-2 focus:outline-none" %>
+            <% end %>
+          </div>
+          <div class="flex space-x-4">
+            <div class="flex items-center justify-center">
+              <%= link_to "Listagem", billet_payments_path, class: "rounded border-2 border-lime-200 px-4 py-2 font-bold text-white hover:bg-lime-200 focus:outline-none" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

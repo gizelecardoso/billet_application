@@ -1,10 +1,41 @@
-<table>
-  <% @billet_payments.each do |billet| %>
-    <tr>
-      <td><%= billet["amount"] %></td>
-      <td><%= billet["expire_at"] %></td>
-      <td><%= billet["status"] %></td>
-      <td><%= billet["customer_person_name"] %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="flex flex-col">
+  <img src="/img/logo.svg" class="m-10 h-10" alt="Tailwind Play" />
+  <div class="flex flex-col justify-content">
+    <% flash.each do |nome, mensagem| %>
+      <%= content_tag :div, mensagem, class: nome %>
+    <% end %>
+    <div class="mx-auto space-y-8 sm:max-w-xl md:max-w-2xl lg:max-w-7xl">
+      <div class="relative overflow-x-auto">
+        <table>
+          <thead class="text-xs uppercase text-white">
+            <tr class="border-2 border-lime-200">
+              <th scope="col" class="px-6 py-3">Id</th>
+              <th scope="col" class="px-6 py-3">Valor</th>
+              <th scope="col" class="px-6 py-3">Expira em</th>
+              <th scope="col" class="px-6 py-3">Nome do consumidor</th>
+              <th scope="col" class="px-6 py-3">Status</th>
+              <th scope="col" class="px-6 py-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @billet_payments.each do |billet| %>
+              <tr class="border border-lime-200 text-white">
+                <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium"><%= billet["id"] %></th>
+                <td class="px-6 py-4">R$<%= billet["amount"] %></td>
+                <td class="px-6 py-4"><%= billet["expire_at"] %></td>
+                <td class="px-6 py-4"><%= billet["customer_person_name"] %></td>
+                <td class="px-6 py-4"><%= billet["status"] %></td>
+                <td class="px-6 py-4">
+                  <%= link_to "Ver", billet_payment_path(id: billet[:id]), class: "rounded px-4 py-2 font-bold text-white hover:text-lime-200 hover:underline hover:underline-offset-2 focus:outline-none" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-center">
+        <%= link_to "Cadastrar", new_customer_path, class: "rounded border-2 border-lime-200 px-4 py-2 font-bold text-white hover:bg-lime-200 focus:outline-none" %>
+      </div>
+    </div>
+  </div>
+</div>

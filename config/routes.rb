@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root to: 'home#show'
+
   put '/billet_payments/:id/cancel', to: 'billet_payments#cancel'
 
   resources :customers, only: %i[new create]

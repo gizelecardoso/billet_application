@@ -1,0 +1,14 @@
+<div class="relative flex min-h-screen flex-col justify-center bg-black py-6 text-white sm:py-12">
+  <img src="file: app/assets/images/logo.jpeg" alt="Logo" />
+
+  <div class="flex flex-col items-center space-y-20">
+    <div class="flex flex-col items-center">
+      <h2>Bem-vindo ao sistema de criação de boletos</h2>
+      <h3>Se estiver pronto para começar, basta clicar em um dos dois botões abaixo</h3>
+    </div>
+    <div class="flex space-x-10">
+      <%= link_to "Listar Boletos", billet_payments_path, class: "rounded border-2 border-lime-200 px-4 py-2 font-bold text-white hover:bg-lime-200 focus:outline-none" %>
+      <%= link_to "Cadastrar Boleto", new_customer_path, class: "rounded border-2 border-lime-200 px-4 py-2 font-bold text-white hover:bg-lime-200 focus:outline-none" %>
+    </div>
+  </div>
+</div>

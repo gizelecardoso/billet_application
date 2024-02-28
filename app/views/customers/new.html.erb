@@ -1,9 +1,25 @@
-<%= form_with url: customers_path, method: :post do |form| %>
-  <%= form.label :name, "Nome do consumidor:" %>
-  <%= form.text_field :name %>
+<div class="flex flex-col">
+  <img src="/img/logo.svg" class="m-10 h-10" alt="Tailwind Play" />
+  <div class="">
+    <div class="mx-auto lg:max-w-5xl md:max-w-2xl sm:max-w-xl">
+      <div class="space-y-6 rounded border-4 border-lime-200 p-10 text-lg text-white">
+        <h2 class="flex justify-center font-bold text-2xl">Dados do Consumidor</h2>
+        <%= form_with url: customers_path, method: :post, id: 'customer_form'  do |form| %>
+          <div class="mb-4">
+            <%= form.label :name, "Nome do consumidor:", class: "mb-2 block font-bold" %>
+            <%= form.text_field :name, class: "w-full rounded border border-lime-200 bg-black px-3 py-2 focus:border-2 focus:border-lime-300 focus:outline-none" %>
+          </div>
 
-  <%= form.label :document, "Número do documento:" %>
-  <%= form.text_field :document %>
+          <div class="mb-4">
+            <%= form.label :document, "Número do documento:", class: "mb-2 block font-bold" %>
+            <%= form.text_field :document, class: "w-full rounded border border-lime-200 bg-black px-3 py-2 focus:border-2 focus:border-lime-300 focus:outline-none" %>
+          </div>
 
-  <%= form.submit "Criar Consumidor" %>
-<% end %>
+          <div class="flex items-center justify-center">
+            <button class="rounded border-2 border-lime-200 px-4 py-2 font-bold text-white hover:bg-lime-200 focus:outline-none" type="submit" form="customer_form">Cadastrar Consumidor</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
