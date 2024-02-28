@@ -10,7 +10,7 @@ module BilletPayments
     delegate :billet_payment, to: :context
 
     def call
-      billet_payment = BoletoSimples::BankBillet.cancel(id: context.billet_payment_id)
+      BoletoSimples::BankBillet.cancel(id: context.billet_payment_id)
     end
   end
 end
