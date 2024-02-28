@@ -8,8 +8,9 @@ RSpec.describe BilletPayments::Create, type: :interactor do
       it 'returns success' do
         billet_payment_data = {
           amount: 100,
-          expire_at: Time.now,
-          customer: create(:customer)
+          expire_at: Time.now + 7,
+          customer: create(:customer),
+          status: 'opened'
         }
 
         expect(described_class.call(billet_payment_data:)).to be_a_success
@@ -18,8 +19,9 @@ RSpec.describe BilletPayments::Create, type: :interactor do
       it 'creates new billet_payment' do
         billet_payment_data = {
           amount: 100,
-          expire_at: Time.now,
-          customer: create(:customer)
+          expire_at: Time.now + 7,
+          customer: create(:customer),
+          status: 'opened'
         }
 
         expect { described_class.call(billet_payment_data:) }.to change(BilletPayment, :count).by(1)

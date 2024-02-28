@@ -23,7 +23,7 @@ class BilletPaymentsController < ApplicationController
 
   def create
     result = BilletPayments::CreateOrganizer.call(
-      billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id])
+      billet_payments_params: billet_payments_params.merge(customer_id: params[:customer_id], status: 'opened')
     )
 
     if result.success?

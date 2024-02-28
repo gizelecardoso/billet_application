@@ -11,7 +11,8 @@ module BilletPayments
     def call
       context.billet_payment_json = {
         amount: context.billet_payments_params[:amount],
-        expire_at: set_expire_at_value
+        expire_at: set_expire_at_value,
+        status: context.billet_payments_params[:status]
       }.merge(prepare_customer_data, billet_payment.present? ? prepare_address2_data : prepare_address1_data)
 
       context.billet_payment_id = context.billet_payments_params[:id]

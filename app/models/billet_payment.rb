@@ -2,16 +2,11 @@
 
 # Model responsible for customer billet payments infos
 class BilletPayment < ApplicationRecord
-  before_validation :set_default_values
-
   belongs_to :customer
-
-  enum status: { opened: 0, overdue: 1, canceled: 2, paid: 3 }
 
   validates :amount, presence: true
   validates :expire_at, presence: true
 
-  def set_default_values
-    self.status = 0
-  end
+  validates :status, inclusion: { in: %w[opened overdue canceled paid],
+                                  message: '%<value>s is not a valid status' }
 end

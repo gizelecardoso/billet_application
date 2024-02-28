@@ -12,7 +12,7 @@ RSpec.describe BilletPayments::Cancel, type: :interactor do
         expect(result).to be_a_success
       end
 
-      xit 'cancel new billet_payment' do
+      it 'cancel new billet_payment' do
         create(:billet_payment, api_id: 10)
         result = described_class.call(billet_payment_id: 10)
 
