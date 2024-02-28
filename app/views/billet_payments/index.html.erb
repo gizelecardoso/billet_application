@@ -26,7 +26,7 @@
                 <td class="px-6 py-4"><%= billet["customer_person_name"] %></td>
                 <td class="px-6 py-4"><%= billet["status"] %></td>
                 <td class="px-6 py-4">
-                  <%= link_to "Ver", billet_payment_path(id: billet[:id]), class: "rounded px-4 py-2 font-bold text-white hover:text-lime-200 hover:underline hover:underline-offset-2 focus:outline-none" %>
+                  <%= link_to "Ver", billet_payment_path(billet["id"]), class: "rounded px-4 py-2 font-bold text-white hover:text-lime-200 hover:underline hover:underline-offset-2 focus:outline-none" %>
                 </td>
               </tr>
             <% end %>

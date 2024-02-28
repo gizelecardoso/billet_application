@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CustomersController, type: :request do
-  xdescribe 'GET #new' do
+  describe 'GET #new' do
     it 'returns http success' do
       get new_customer_path
 
@@ -13,7 +13,7 @@ RSpec.describe CustomersController, type: :request do
   end
 
   describe 'POST #create' do
-    xcontext 'when passed valid params' do
+    context 'when passed valid params' do
       it 'redirect to show page' do
         billet_payment_json = {
           name: 'Gizele Santos',
@@ -22,7 +22,7 @@ RSpec.describe CustomersController, type: :request do
 
         post customers_path, params: billet_payment_json
 
-        expect(response).to redirect_to new_address_path
+        expect(response.headers['location']).to include('/addresses/new?customer_id=')
       end
     end
 

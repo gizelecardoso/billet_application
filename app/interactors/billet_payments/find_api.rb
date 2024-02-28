@@ -8,7 +8,7 @@ module BilletPayments
     include Interactor
 
     def call
-      context.billet_payment = BoletoSimples::BankBillet.find(id: context.billet_payment_id)
+      context.billet_payment = BoletoSimples::BankBillet.find(context.billet_payment_id)
     end
   end
 end

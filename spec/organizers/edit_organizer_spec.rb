@@ -10,7 +10,7 @@ RSpec.describe BilletPayments::EditOrganizer, type: :organizer do
           BilletPayments::GenerateJsonToApi,
           BilletPayments::EditApi,
           BilletPayments::FindApi,
-          BilletPayments::GenerateData,
+          BilletPayments::GenerateDataUpdate,
           BilletPayments::Edit
         ]
       )

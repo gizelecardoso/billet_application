@@ -9,6 +9,8 @@ class BilletPaymentsController < ApplicationController
     result = BilletPayments::ListApi.call
 
     @billet_payments = result.billet_payments.present? ? result.billet_payments : []
+    flash[:alert] = result.message
+
     respond_to do |format|
       format.html
       format.json { render json: @billet_payments }
@@ -38,6 +40,7 @@ class BilletPaymentsController < ApplicationController
   def update
     result = BilletPayments::EditOrganizer.call(
       billet_payment: @billet_payment,
+      customer_id: params[:customer_id],
       billet_payments_params:
     )
 

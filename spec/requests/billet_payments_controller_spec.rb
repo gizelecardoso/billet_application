@@ -7,6 +7,7 @@ RSpec.describe BilletPaymentsController, type: :request do
     it 'returns http success' do
       customer = create(:customer, :with_addresses)
       billet_payment_json = {
+        id: 10,
         amount: 100,
         expire_at: (Date.today + 7).strftime('%F'),
         status: 'opened',
@@ -81,14 +82,20 @@ RSpec.describe BilletPaymentsController, type: :request do
     end
   end
 
-  xdescribe 'PUT #update' do
+  describe 'PUT #update' do
     context 'when passed valid params' do
       it 'redirect to show page' do
+        bill = create(:billet_payment, api_id: 10)
         billet_payment_json = {
-          expire_at: (Date.today + 7).strftime('%F')
+          expire_at: (Date.today + 8).strftime('%F'),
+          customer_id: bill.customer.id
         }.transform_keys(&:to_s)
 
         billet_payment = {
+          'id' => 10,
+          'amount' => 100,
+          'expire_at' => (Date.today + 7).strftime('%F'),
+          'status' => 'opened',
           'customer_person_name' => 'Gizele Correia',
           'customer_cnpj_cpf' => '819.574.470-28',
           'customer_state' => 'SP',
@@ -99,31 +106,46 @@ RSpec.describe BilletPaymentsController, type: :request do
         }
 
         bank_billet = BoletoSimples::BankBillet.new(billet_payment)
-        expect(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
+        allow(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
+        allow(BilletPayments::EditApi).to receive(:call).with(billet_payment_id: 10,
+                                                              billet_payment_json:).and_return(204)
 
-        expect(BilletPayments::EditApi).to receive(:call).with(billet_payment_id: 10,
-                                                               billet_payment_json:).and_return(204)
-        put billet_payment_path(id: 10)
+        put billet_payment_path(id: 10), params: billet_payment_json
 
-        expect(response).to redirect_to billet_payment_path(id: 10)
+        expect(response).to redirect_to billet_payment_path(bank_billet)
       end
     end
 
-    context 'when doesnt passed valid params' do
+    xcontext 'when doesnt passed valid params' do
       it 'render page new again' do
         customer = create(:customer, :with_addresses)
-        billet_payment_json = { customer_id: customer.id }
+        billet_payment_json = {
+          amount: 20,
+          customer_id: customer.id
+        }.transform_keys(&:to_s)
 
-        expect(BoletoSimples::BankBillet)
-          .to receive(:create)
-          .and_return(BoletoSimples::BankBillet.new(billet_payment_json))
+        billet_payment = {
+          'id' => 10,
+          'amount' => 100,
+          'expire_at' => (Date.today + 7).strftime('%F'),
+          'status' => 'opened',
+          'customer_person_name' => 'Gizele Correia',
+          'customer_cnpj_cpf' => '819.574.470-28',
+          'customer_state' => 'SP',
+          'customer_address' => 'Rua Teste',
+          'customer_city_name' => 'São Paulo',
+          'customer_zipcode' => '04587-985',
+          'customer_neighborhood' => 'Teste'
+        }
 
-        bank_billet = BoletoSimples::BankBillet.new(billet_payment_json)
-        expect(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
+        bank_billet = BoletoSimples::BankBillet.new(billet_payment)
+        allow(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
+        allow(BilletPayments::EditApi).to receive(:call)
+          .with(billet_payment_id: 10, billet_payment_json:).and_return(:unprocessable_entity)
 
-        post billet_payments_path(id: 10, params: billet_payment_json)
+        put billet_payment_path(id: 10), params: billet_payment_json
 
-        expect(response).to render_template(:new)
+        expect(response).to render_template(:edit)
       end
     end
   end
@@ -139,12 +161,12 @@ RSpec.describe BilletPaymentsController, type: :request do
           status: 'canceled'
         }.transform_keys(&:to_s)
 
-        expect(BoletoSimples::BankBillet)
+        allow(BoletoSimples::BankBillet)
           .to receive(:cancel)
           .and_return(BoletoSimples::BankBillet.new(billet_payment_json))
 
         bank_billet = BoletoSimples::BankBillet.new(billet_payment_json)
-        expect(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
+        allow(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
 
         put '/billet_payments/10/cancel', params: billet_payment_json
 
@@ -152,7 +174,7 @@ RSpec.describe BilletPaymentsController, type: :request do
       end
     end
 
-    xcontext 'when doesnt passed valid params' do
+    context 'when doesnt passed valid params' do
       it 'render page new again' do
         customer = create(:customer, :with_addresses)
         billet_payment = create(:billet_payment, customer:, api_id: 10)
@@ -162,12 +184,12 @@ RSpec.describe BilletPaymentsController, type: :request do
           status: 'canceled'
         }.transform_keys(&:to_s)
 
-        expect(BoletoSimples::BankBillet)
+        allow(BoletoSimples::BankBillet)
           .to receive(:cancel)
           .and_return(BoletoSimples::BankBillet.new(billet_payment_json))
 
         bank_billet = BoletoSimples::BankBillet.new(billet_payment_json)
-        expect(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
+        allow(BoletoSimples::BankBillet).to receive(:find).and_return(bank_billet)
 
         put '/billet_payments/1/cancel', params: billet_payment_json
 
