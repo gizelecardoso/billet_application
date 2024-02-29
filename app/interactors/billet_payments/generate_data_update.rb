@@ -12,8 +12,7 @@ module BilletPayments
         amount: billet_payment.amount,
         expire_at: billet_payment.expire_at,
         api_id: billet_payment.id,
-        status: billet_payment.status,
-        customer_id: context.customer_id
+        status: billet_payment.status
       }
     end
   end

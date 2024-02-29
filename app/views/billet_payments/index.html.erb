@@ -1,5 +1,5 @@
 <div class="flex flex-col">
-  <img src="/img/logo.svg" class="m-10 h-10" alt="Tailwind Play" />
+  <%= image_tag("logo.jpeg", class: "m-10") %>
   <div class="flex flex-col justify-content">
     <% flash.each do |nome, mensagem| %>
       <%= content_tag :div, mensagem, class: nome %>
