@@ -1,24 +1,48 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### O que precisa para rodar essa aplicação:
 
-Things you may want to cover:
+1. Ruby - versão 3.3.0
+2. PostgreSQL
+3. Bundler - versão 2.5.3
+4. Rubygems - versão 3.5.3
 
-* Ruby version
+### Passo para rodar o projeto
 
-* System dependencies
+1. Informar as credenciais do Banco de Dados no arquivo:
+```
+  config/database.yml
+```
 
-* Configuration
+2. Instalar as gems do Gemfile:
+```ruby
+bundle install
+```
 
-* Database creation
+3. Criar o banco:
+```
+rails db:create
+```
 
-* Database initialization
+4. Rodar as migrações:
+```
+rails db:migrate
+```
 
-* How to run the test suite
+5. Adicionar no arquivo:
+```
+.env:
+  KOBANA_TOKEN = ''
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+5. Subir a aplicação:
+```
+bin/dev ou rails s
+```
 
-* Deployment instructions
+6. Aplicação disponível endereço: localhost:3000
+```
+localhost:3000
+```
 
-* ...
+___
