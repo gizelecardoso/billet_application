@@ -30,17 +30,24 @@ rails db:migrate
 ```
 
 5. Adicionar no arquivo:
+Link doc da api: https://developers.kobana.com.br/reference/visao-geral
+Link do app-system (onde pode se cadastrar e conseguir o token): https://app-sandbox.kobana.com.br/users/sign_in
 ```
 .env:
   KOBANA_TOKEN = ''
 ```
 
-5. Subir a aplicação:
+5. Rodar o install do tailwind:
+```
+rails tailwindcss:install
+```
+
+6. Subir a aplicação:
 ```
 bin/dev ou rails s
 ```
 
-6. Aplicação disponível endereço: localhost:3000
+7. Aplicação disponível endereço: localhost:3000
 ```
 localhost:3000
 ```
